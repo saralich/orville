@@ -23,7 +23,9 @@ import Control.Monad.Trans.State
 import qualified Data.Map as Map
 import qualified Data.Map.Helpers as Map
 import Data.Maybe
-import Data.Monoid
+
+--redundant import in lts-12
+--import Data.Monoid
 import Data.String (fromString)
 
 import Database.Orville.Internal.Expr

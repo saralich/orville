@@ -7,7 +7,8 @@ License   : MIT
 
 module Database.Orville.Internal.Expr.NameExpr where
 
-import Data.Monoid
+--redundant import in lts-12
+--import Data.Monoid
 import Data.String
 
 import Database.Orville.Internal.Expr.Expr
@@ -15,19 +16,13 @@ import Database.Orville.Internal.QueryKey
 
 type NameExpr = Expr NameForm
 
-data NameForm =
-  NameForm
-    { nameFormTable :: Maybe String
-    , nameFormName :: String
-    }
-  deriving (Eq, Ord)
+data NameForm = NameForm
+  { nameFormTable :: Maybe String
+  , nameFormName :: String
+  } deriving (Eq, Ord)
 
 instance IsString NameForm where
-  fromString str =
-    NameForm
-      { nameFormTable = Nothing
-      , nameFormName = str
-      }
+  fromString str = NameForm {nameFormTable = Nothing, nameFormName = str}
 
 instance QualifySql NameForm where
   qualified form table = form {nameFormTable = Just table}
@@ -36,8 +31,7 @@ instance QueryKeyable NameForm where
   queryKey = QKField . unescapedName
 
 instance GenerateSql NameForm where
-  generateSql (NameForm Nothing name) =
-    "\"" <> rawSql name <> "\""
+  generateSql (NameForm Nothing name) = "\"" <> rawSql name <> "\""
   generateSql (NameForm (Just table) name) =
     "\"" <> rawSql table <> "\".\"" <> rawSql name <> "\""
 

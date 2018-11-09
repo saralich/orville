@@ -17,7 +17,8 @@ import Control.Monad.Catch
 import Control.Monad.IO.Class
 import Data.Data
 import Data.Int
-import Data.Monoid
+--redundant import in lts-12
+--import Data.Monoid
 import Data.String
 import Database.HDBC hiding (withTransaction)
 

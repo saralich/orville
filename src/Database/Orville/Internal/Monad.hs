@@ -21,6 +21,7 @@ import Control.Monad.State
 import Control.Monad.Trans.Control
 import Data.Pool
 import Database.HDBC hiding (withTransaction)
+import UnliftIO (MonadUnliftIO(..))
 
 type Orville a
    = forall m conn. (MonadOrville conn m, MonadThrow m) =>
@@ -73,6 +74,11 @@ newtype OrvilleT conn m a = OrvilleT
              , MonadCatch
              , MonadMask
              )
+
+instance MonadUnliftIO m => MonadUnliftIO (OrvilleT conn m) where
+  withRunInIO action =
+    OrvilleT $
+    withRunInIO $ \runReaderInIO -> action (runReaderInIO . unOrvilleT)
 
 mapOrvilleT ::
      Monad n => (m a -> n b) -> OrvilleT conn m a -> OrvilleT conn n b

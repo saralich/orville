@@ -149,7 +149,9 @@ import Data.Convertible
 import qualified Data.List as List
 import qualified Data.Map.Strict as Map
 import Data.Maybe (listToMaybe)
-import Data.Monoid
+
+--redundant import in lts-12
+--import Data.Monoid
 import Database.HDBC hiding (withTransaction)
 
 import qualified Data.Map.Helpers as Map
